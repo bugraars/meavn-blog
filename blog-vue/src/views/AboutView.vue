@@ -1,15 +1,29 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
-  </div>
+  <main class="container-fluid">
+    <h1>About Page</h1>
+    <p>{{this.data}}</p>
+  </main>
 </template>
 
-<style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-}
-</style>
+<script>
+import homeService from '../services/api/home-service';
+export default {
+  name: 'HomeView',
+  data() {
+    return {
+      data: [],
+    };
+  },
+
+  created() {
+    homeService.getHomeService()
+      .then(response => {
+        console.log(response.data)
+        this.data = response.data;
+      })
+      .catch(error => {
+        console.error(`Hata oluştu: HomeService`, error);
+      });
+  },
+};
+</script>
